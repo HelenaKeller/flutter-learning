@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './question.dart';
+import './answer.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,39 +21,72 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
-    print(_questionIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      'What\'s your favourite color?',
-      'What\'s your favourite animal?',
-    ];
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Personality Quiz'),
         ),
-        body: Column(children: [
-          Question(
-            questions[_questionIndex],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 30,
           ),
-          ElevatedButton(
-            onPressed: _answerQuestion,
-            child: const Text('Answer 1.'),
+          child: Column(
+            children: [
+              Question(
+                questionAndAnswers[_questionIndex].questionText,
+              ),
+              ...(questionAndAnswers[_questionIndex].answers)
+                  .map((answer) => Answer(_answerQuestion, answer))
+                  .toList(),
+            ],
           ),
-          ElevatedButton(
-            onPressed: _answerQuestion,
-            child: const Text('Answer 2.'),
-          ),
-          ElevatedButton(
-            onPressed: _answerQuestion,
-            child: const Text('Answer 3.'),
-          ),
-        ]),
+        ),
       ),
     );
   }
+}
+
+const questionAndAnswers = <QuestionAndAnswers>[
+  QuestionAndAnswers(
+    questionText: 'What\'s your favourite color?',
+    answers: [
+      'Blue',
+      'Red',
+      'Black',
+      'Green',
+    ],
+  ),
+  QuestionAndAnswers(
+    questionText: 'What\'s your favourite animal?',
+    answers: [
+      'Dog',
+      'Cat',
+      'Snake',
+      'Rabbit',
+    ],
+  ),
+  QuestionAndAnswers(
+    questionText: 'What\'s your favourite instrument?',
+    answers: [
+      'Piano',
+      'Flute',
+      'Guitar',
+      'Violin',
+    ],
+  ),
+];
+
+class QuestionAndAnswers {
+  const QuestionAndAnswers({
+    required this.questionText,
+    required this.answers,
+  });
+
+  final String questionText;
+  final List<String> answers;
 }
