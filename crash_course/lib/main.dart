@@ -1,7 +1,7 @@
+import 'package:crash_course/quiz.dart';
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,23 +35,22 @@ class _MyAppState extends State<MyApp> {
             vertical: 10,
             horizontal: 30,
           ),
-          child: Column(
-            children: [
-              Question(
-                questionAndAnswers[_questionIndex].questionText,
-              ),
-              ...(questionAndAnswers[_questionIndex].answers)
-                  .map((answer) => Answer(_answerQuestion, answer))
-                  .toList(),
-            ],
-          ),
+          child: _questionIndex < _questionAndAnswers.length
+              ? Quiz(
+                  answerQuestion: _answerQuestion,
+                  questionAndAnswers: _questionAndAnswers,
+                  questionIndex: _questionIndex,
+                )
+              : const Center(
+                  child: Text('You did it!'),
+                ),
         ),
       ),
     );
   }
 }
 
-const questionAndAnswers = <QuestionAndAnswers>[
+const _questionAndAnswers = <QuestionAndAnswers>[
   QuestionAndAnswers(
     questionText: 'What\'s your favourite color?',
     answers: [
