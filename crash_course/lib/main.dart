@@ -1,7 +1,9 @@
 import 'package:crash_course/quiz.dart';
+import 'package:crash_course/result.dart';
 import 'package:flutter/material.dart';
 
 import './quiz.dart';
+import './result.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,9 +43,7 @@ class _MyAppState extends State<MyApp> {
                   questionAndAnswers: _questionAndAnswers,
                   questionIndex: _questionIndex,
                 )
-              : const Center(
-                  child: Text('You did it!'),
-                ),
+              : Result(),
         ),
       ),
     );
